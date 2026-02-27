@@ -42,5 +42,4 @@ next-env.d.ts
 
 # Claude Code
 .claude/settings.local.json
-.claude/hooks/
 .claude/agent-memory/
