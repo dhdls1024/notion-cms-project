@@ -3,6 +3,13 @@
 
 set -euo pipefail
 
+# .env.local 파일에서 환경변수 로드 (있으면)
+if [ -f "$(dirname "$0")/../../.env.local" ]; then
+  set -a
+  source "$(dirname "$0")/../../.env.local"
+  set +a
+fi
+
 # stdin에서 JSON 데이터 읽기
 INPUT=$(cat)
 
