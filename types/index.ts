@@ -25,27 +25,13 @@ export interface ChildrenProps {
   children: React.ReactNode
 }
 
-// 컴포넌트 카드 태그 타입
-export type ComponentCardTag =
-  | "UI/UX"
-  | "인터랙티브"
-  | "검증"
-  | "상태관리"
-  | "반응형"
-  | "레이아웃"
-  | "훅"
-  | "유틸리티"
-  | "API"
-  | "비동기"
-  | "최적화"
-  | "SEO"
-
-// 컴포넌트 카드 아이템 타입
-export interface ComponentCardItem {
-  id: string
-  title: string
-  description: string
-  href: string
-  tags: ComponentCardTag[]
-  icon: string
+// Notion 링크 아이템 타입 — Notion DB 속성을 앱에서 사용하는 형태로 정규화
+export interface LinkItem {
+  id: string // Notion 페이지 ID
+  title: string // Name 속성
+  url: string // URL 속성
+  icon: string // Icon 속성 (이모지 또는 이미지 URL)
+  category: string // Category 속성
+  active: boolean // Active 속성
+  order: number // Order 속성
 }

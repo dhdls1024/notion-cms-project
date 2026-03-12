@@ -1,14 +1,8 @@
-// 랜딩 페이지: 서버 컴포넌트로 SEO 최적화
-import { HeroSection } from "@/components/sections/hero-section"
-import { TechStackSection } from "@/components/sections/tech-stack-section"
-
+// 홈 페이지: Notion CMS 링크 허브 — 서버 컴포넌트 (SEO 최적화)
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">
-      {/* Hero: 메인 타이틀과 CTA 버튼 */}
-      <HeroSection />
-      {/* TechStack: 기술 스택 카드 그리드 */}
-      <TechStackSection />
+      {/* TODO: Notion API fetch → 링크 카드 + 카테고리 필터 UI */}
     </main>
   )
 }

@@ -7,7 +7,6 @@ import { ThemeProvider } from "next-themes"
 // Toaster: sonner 기반 토스트 알림 컴포넌트
 import { Toaster } from "@/components/ui/sonner"
 import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
 // QueryProvider: TanStack Query 캐시 컨텍스트 (클라이언트 컴포넌트)
 import { QueryProvider } from "@/providers/query-provider"
 import "./globals.css"
@@ -50,7 +49,6 @@ export default function RootLayout({
           <QueryProvider>
             <Header />
             {children}
-            <Footer />
             {/* richColors: 알림 유형별 색상 자동 적용 */}
             <Toaster richColors />
           </QueryProvider>

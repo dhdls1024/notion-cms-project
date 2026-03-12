@@ -37,6 +37,7 @@ export function ThemeToggle() {
   // 아이콘이 달라지는 Hydration 불일치를 방지하기 위해 마운트 전 고정 플레이스홀더 렌더
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
+    // SSR hydration 불일치 방지: 마운트 후 클라이언트에서만 실제 테마 아이콘 렌더
     setMounted(true)
   }, [])
 
