@@ -59,32 +59,45 @@ npm run dev
 
 브라우저에서 [http://localhost:3000](http://localhost:3000)으로 접속합니다.
 
-## 📚 프로젝트 구조
+## 프로젝트 구조
 
 ```
 app/                    # Next.js App Router
-  layout.tsx            # 루트 레이아웃
-  page.tsx              # 홈페이지 (링크 허브)
+  layout.tsx            # 루트 레이아웃 (ThemeProvider, QueryProvider, Header, Toaster)
+  page.tsx              # 홈페이지 (링크 허브 — F001~F005 구현 예정)
   examples/             # 기능 예제 페이지
 
 components/
-  ui/                   # shadcn/ui 컴포넌트
-  layout/               # 레이아웃 컴포넌트 (Header, Footer)
-  sections/             # 페이지 섹션 (Hero, TechStack)
-  common/               # 공통 컴포넌트
+  ui/                   # shadcn/ui 컴포넌트 (직접 수정 금지)
+  layout/               # Header, Container, MobileNav
+  common/               # ThemeToggle, BackButton, PageHeader 등 공통 컴포넌트
 
 lib/
-  notion.ts             # Notion API 클라이언트
-  constants.ts          # 상수 정의
-  utils.ts              # 유틸리티 함수
+  constants.ts          # SITE_CONFIG, ROUTES, TECH_STACK 상수
+  utils.ts              # cn() 유틸리티 (clsx + tailwind-merge)
 
 types/
-  index.ts              # TypeScript 타입 정의
+  index.ts              # TypeScript 타입 (NavItem, LinkItem, Theme 등)
+
+providers/
+  query-provider.tsx    # TanStack Query 클라이언트 Provider
 
 docs/
   PRD.md                # 제품 요구사항 명세
-  issues.md             # 구현 가이드 및 이슈 해결 방법
+  issues.md             # ISR, Icon 처리, Rate Limit 해결 가이드
 ```
+
+## 주의사항
+
+### Notion API Rate Limit
+
+Notion API 공식 문서에는 rate limit이 명시되어 있지 않습니다.
+
+- 개인/소규모 사용 (하루 수천 번 접속): 정상 동작
+- ISR 3600초 설정 기준: 문제 없음
+- 대규모 배포 (많은 동시 방문자): 제한 발생 가능 — 캐싱 전략(Redis, CDN) 고려 필요
+
+자세한 해결 방법은 [docs/issues.md](./docs/issues.md)를 참조하세요.
 
 ## 📖 문서
 
