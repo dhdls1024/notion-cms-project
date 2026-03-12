@@ -1,6 +1,13 @@
 # CLAUDE.md
 
+**Notion CMS 링크 허브**는 Notion 데이터베이스를 CMS로 활용하여 코드 배포 없이 링크 페이지를 실시간 관리하는 개인 디지털 명함 사이트입니다.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Context
+
+- PRD 문서: @docs/PRD.md
+- 개발 로드맵: @docs/ROADMAP.md
 
 ## 개발 명령어
 
