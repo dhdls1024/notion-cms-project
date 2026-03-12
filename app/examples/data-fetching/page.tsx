@@ -6,8 +6,6 @@ import { Container } from "@/components/layout/container"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ClientDataFetching } from "./client-section"
-// TanStackQueryDemo: useQuery/useMutation/조건부 조회 예제 컴포넌트
-import { TanStackQueryDemo } from "@/components/examples/tanstack-query-demo"
 
 export const metadata: Metadata = {
   title: "데이터 페칭 | Next.js 스타터킷",
@@ -107,19 +105,6 @@ export default function DataFetchingPage() {
               <ClientDataFetching />
             </div>
 
-            <Separator />
-
-            {/* TanStack Query 섹션 */}
-            <div className="space-y-4">
-              <div>
-                <h2 className="text-xl font-semibold">TanStack Query v5</h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  캐싱, 자동 리패칭, 로딩/에러 상태를 선언적으로 처리합니다.
-                  useQuery · useMutation · 조건부 조회(enabled) 패턴을 비교해보세요.
-                </p>
-              </div>
-              <TanStackQueryDemo />
-            </div>
           </div>
         </Container>
       </section>

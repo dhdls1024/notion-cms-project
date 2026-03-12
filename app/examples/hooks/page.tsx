@@ -58,6 +58,7 @@ function UseLocalStorageDemo() {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    // localStorage 초기값과 서버 렌더 불일치로 인한 hydration 오류 방지
     setIsMounted(true)
   }, [])
 
@@ -136,6 +137,7 @@ function UseMediaQueryDemo() {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    // window 없는 SSR과 클라이언트 미디어쿼리 결과 불일치 hydration 오류 방지
     setIsMounted(true)
   }, [])
 

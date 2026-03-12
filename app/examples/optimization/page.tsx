@@ -6,7 +6,12 @@ import { Container } from "@/components/layout/container"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { DynamicCounterWrapper } from "./dynamic-counter-wrapper"
-import { IMAGE_URLS } from "@/lib/constants"
+
+// next/image 예제용 이미지 URL (picsum.photos — seed로 동일 이미지 재현)
+const IMAGE_URLS = {
+  nextjsSample: "https://picsum.photos/seed/nextjs/300/200",
+  optimizationSample: "https://picsum.photos/seed/optimization/400/225",
+} as const
 
 export const metadata: Metadata = {
   title: "설정 및 최적화 | Next.js 스타터킷",

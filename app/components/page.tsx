@@ -1,7 +1,6 @@
 // 컴포넌트 카드 목록 페이지 — 서버 컴포넌트, SEO 메타데이터 포함
 import type { Metadata } from "next"
 import { Container } from "@/components/layout/container"
-import { ComponentsGrid } from "@/components/sections/components-grid"
 import { SITE_CONFIG } from "@/lib/constants"
 
 // 페이지 메타데이터 (SEO)
@@ -21,17 +20,17 @@ export default function ComponentsPage() {
               컴포넌트 쇼케이스
             </h1>
             <p className="max-w-2xl text-muted-foreground">
-              Next.js 스타터킷에서 제공하는 예제 컴포넌트와 패턴들을 직접
-              조작하며 확인하세요.
+              shadcn/ui 기반 컴포넌트 예제와 패턴 모음입니다.
             </p>
           </div>
         </Container>
       </section>
 
-      {/* 예제 카드 그리드 */}
       <section className="py-12">
         <Container>
-          <ComponentsGrid />
+          <p className="text-muted-foreground text-sm">
+            컴포넌트 목록이 준비 중입니다.
+          </p>
         </Container>
       </section>
     </main>
