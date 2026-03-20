@@ -2,8 +2,11 @@
 
 // LinkHubClient: 카테고리 탭 필터 클라이언트 컴포넌트
 // shadcn Tabs로 카테고리 필터링 + 반응형 그리드 링크 카드 목록
-import { useState } from "react"
+import { useState, useTransition } from "react"
+import { useRouter } from "next/navigation"
+import { RefreshCw } from "lucide-react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button"
 import LinkCard from "@/components/LinkCard"
 import AddLinkDialog from "@/components/AddLinkDialog"
 import type { LinkItem } from "@/types"
@@ -17,6 +20,16 @@ const ALL_CATEGORY = "전체"
 
 export default function LinkHubClient({ links }: LinkHubClientProps) {
   const [activeTab, setActiveTab] = useState(ALL_CATEGORY)
+  const router = useRouter()
+  // useTransition으로 새로고침 중 로딩 상태 추적
+  const [isPending, startTransition] = useTransition()
+
+  // 서버 컴포넌트 재렌더링 — Notion DB 최신 데이터 즉시 반영
+  function handleRefresh() {
+    startTransition(() => {
+      router.refresh()
+    })
+  }
 
   // Set으로 카테고리 중복 제거 후 정렬
   const categories = [
@@ -32,8 +45,18 @@ export default function LinkHubClient({ links }: LinkHubClientProps) {
 
   return (
     <div className="w-full">
-      {/* 링크 추가 버튼 — 우측 정렬 */}
-      <div className="flex justify-end mb-4">
+      {/* 링크 추가 + 새로고침 버튼 — 우측 정렬 */}
+      <div className="flex justify-end gap-2 mb-4">
+        {/* 새로고침: router.refresh()로 서버 컴포넌트 재실행 → Notion 최신 데이터 반영 */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleRefresh}
+          disabled={isPending}
+          aria-label="링크 목록 새로고침"
+        >
+          <RefreshCw className={`h-4 w-4 ${isPending ? "animate-spin" : ""}`} />
+        </Button>
         <AddLinkDialog />
       </div>
 
