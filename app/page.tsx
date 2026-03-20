@@ -4,8 +4,8 @@ import { fetchAllLinks } from "@/lib/notion"
 import LinkHubClient from "@/components/LinkHubClient"
 import type { LinkItem } from "@/types"
 
-// ISR: 1분마다 Notion 데이터 재검증 (코드 배포 없이 실시간 반영)
-export const revalidate = 60
+// SSR: 매 요청마다 Notion 데이터 페칭 (개인 링크허브 — 즉시 반영)
+export const revalidate = 0
 
 export default async function Home() {
   // Notion API에서 활성화된 링크 가져오기 — 실패 시 빈 배열 폴백
