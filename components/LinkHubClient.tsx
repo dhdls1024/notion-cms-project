@@ -5,6 +5,7 @@
 import { useState } from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import LinkCard from "@/components/LinkCard"
+import AddLinkDialog from "@/components/AddLinkDialog"
 import type { LinkItem } from "@/types"
 
 interface LinkHubClientProps {
@@ -31,6 +32,11 @@ export default function LinkHubClient({ links }: LinkHubClientProps) {
 
   return (
     <div className="w-full">
+      {/* 링크 추가 버튼 — 우측 정렬 */}
+      <div className="flex justify-end mb-4">
+        <AddLinkDialog />
+      </div>
+
       {/* 카테고리 탭 */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="flex-wrap h-auto w-full justify-start gap-1 mb-6">
@@ -50,8 +56,8 @@ export default function LinkHubClient({ links }: LinkHubClientProps) {
               <p className="text-sm">해당 카테고리에 링크가 없습니다.</p>
             </div>
           ) : (
-            // 반응형 그리드: 모바일 1열 / 태블릿 2열 / 데스크탑 3열
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            // 반응형 그리드: 모바일 1열 / 태블릿·데스크탑 2열
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {filteredLinks.map((link) => (
                 <LinkCard key={link.id} link={link} />
               ))}

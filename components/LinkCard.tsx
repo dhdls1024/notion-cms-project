@@ -1,26 +1,18 @@
 // LinkCard: 링크 카드 서버 컴포넌트
-// shadcn Card 기반, 아이콘 렌더링 + 외부 링크 + CopyButton 포함
-import Image from "next/image"
+// shadcn Card 기반, 외부 링크 + CopyButton 포함
 import { ExternalLink } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import CopyButton from "@/components/CopyButton"
+import LinkCardActions from "@/components/LinkCardActions"
 import type { LinkItem } from "@/types"
 
 interface LinkCardProps {
   link: LinkItem
 }
 
-/**
- * 아이콘 값이 URL인지 판별
- * http:// 또는 https:// 로 시작하면 이미지 URL로 처리
- */
-function isImageUrl(icon: string): boolean {
-  return icon.startsWith("http://") || icon.startsWith("https://")
-}
-
 export default function LinkCard({ link }: LinkCardProps) {
-  const { title, url, icon, category } = link
+  const { title, url, category, memo } = link
 
   return (
     // 카드 전체가 외부 링크로 동작 — target="_blank" 새 탭 열기
@@ -38,27 +30,19 @@ export default function LinkCard({ link }: LinkCardProps) {
         )}
       >
         <CardContent className="flex items-center gap-3 px-4">
-          {/* 아이콘 영역: URL이면 next/image, 이모지면 span */}
-          <div className="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-muted text-xl">
-            {isImageUrl(icon) ? (
-              <Image
-                src={icon}
-                alt={`${title} 아이콘`}
-                width={28}
-                height={28}
-                className="rounded-md object-contain"
-              />
-            ) : (
-              <span role="img" aria-label={`${title} 아이콘`}>
-                {icon}
-              </span>
-            )}
-          </div>
-
-          {/* 제목 + 카테고리 영역 */}
+          {/* 제목 + 카테고리(우측 배지) + 메모 영역 */}
           <div className="flex-1 min-w-0">
-            <p className="font-medium text-sm truncate">{title}</p>
-            <p className="text-xs text-muted-foreground truncate">{category}</p>
+            {/* 제목 행: 이름 + 카테고리 배지 */}
+            <div className="flex items-center gap-2 min-w-0">
+              <p className="font-medium text-sm truncate">{title}</p>
+              <span className="shrink-0 text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+                {category}
+              </span>
+            </div>
+            {/* 메모가 있을 때만 표시 */}
+            {memo && (
+              <p className="text-xs text-muted-foreground truncate mt-0.5">{memo}</p>
+            )}
           </div>
 
           {/* 외부 링크 아이콘 */}
@@ -66,6 +50,9 @@ export default function LinkCard({ link }: LinkCardProps) {
 
           {/* URL 복사 버튼 — 클라이언트 컴포넌트 */}
           <CopyButton url={url} />
+
+          {/* 수정/삭제 액션 버튼 — 클라이언트 컴포넌트, 카드 링크 이벤트 차단 포함 */}
+          <LinkCardActions link={link} />
         </CardContent>
       </Card>
     </a>

@@ -30,8 +30,24 @@ export interface LinkItem {
   id: string // Notion 페이지 ID
   title: string // Name 속성
   url: string // URL 속성
-  icon: string // Icon 속성 (이모지 또는 이미지 URL)
   category: string // Category 속성
-  active: boolean // Active 속성
-  order: number // Order 속성
+  active: boolean // CheckBox 속성
+  memo: string // Memo 속성 (메모/설명)
+}
+
+// 링크 생성 입력 타입 — id, active는 서버에서 자동 결정 (active 기본값 true)
+export interface CreateLinkInput {
+  title: string
+  url: string
+  category: string
+  memo?: string
+}
+
+// 링크 수정 입력 타입 — 모든 필드 선택적 (부분 업데이트 허용)
+export interface UpdateLinkInput {
+  title?: string
+  url?: string
+  category?: string
+  active?: boolean
+  memo?: string
 }
