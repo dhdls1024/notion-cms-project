@@ -5,6 +5,7 @@
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { RefreshCw } from "lucide-react"
+import { toast } from "sonner"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import LinkCard from "@/components/LinkCard"
@@ -28,6 +29,7 @@ export default function LinkHubClient({ links }: LinkHubClientProps) {
   function handleRefresh() {
     startTransition(() => {
       router.refresh()
+      toast.success("새로고침 완료")
     })
   }
 
