@@ -125,7 +125,7 @@ export default function AddLinkDialog({ onSuccess }: AddLinkDialogProps) {
                 <FormItem>
                   <FormLabel>카테고리</FormLabel>
                   <FormControl>
-                    <Input placeholder="개발" {...field} />
+                    <Input placeholder="개발 (선택)" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

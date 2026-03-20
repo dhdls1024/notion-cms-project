@@ -8,7 +8,7 @@ import { z } from "zod"
 export const createLinkSchema = z.object({
   title: z.string().min(1, "제목을 입력하세요"),
   url: z.string().url("올바른 URL 형식이 아닙니다"),
-  category: z.string().min(1, "카테고리를 입력하세요"),
+  category: z.string().default(""),
   memo: z.string().default(""),
 })
 
