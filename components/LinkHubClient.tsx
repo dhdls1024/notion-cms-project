@@ -33,10 +33,12 @@ export default function LinkHubClient({ links }: LinkHubClientProps) {
     })
   }
 
-  // Set으로 카테고리 중복 제거 후 정렬
+  // Set으로 카테고리 중복 제거 후 정렬 — 빈 카테고리는 탭에서 제외 (전체 탭에서만 표시)
   const categories = [
     ALL_CATEGORY,
-    ...Array.from(new Set(links.map((link) => link.category))).sort(),
+    ...Array.from(new Set(links.map((link) => link.category)))
+      .filter((c) => c !== "")
+      .sort(),
   ]
 
   // 선택된 탭에 따라 링크 필터링
