@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 // cn: clsx + tailwind-merge 조건부 클래스 병합 유틸리티
 import { cn } from "@/lib/utils"
@@ -9,6 +9,8 @@ import { Toaster } from "@/components/ui/sonner"
 import { Header } from "@/components/layout/header"
 // QueryProvider: TanStack Query 캐시 컨텍스트 (클라이언트 컴포넌트)
 import { QueryProvider } from "@/providers/query-provider"
+// ServiceWorkerRegistrar: PWA Service Worker 등록 (클라이언트 컴포넌트)
+import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar"
 import "./globals.css"
 import { SITE_CONFIG } from "@/lib/constants"
 
@@ -25,6 +27,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: SITE_CONFIG.name,
   description: SITE_CONFIG.description,
+  // PWA manifest 연결
+  manifest: "/manifest.json",
+  // iOS 홈 화면 설치 지원
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "링크허브",
+  },
+  // 아이콘
+  icons: {
+    apple: "/icons/apple-touch-icon.svg",
+  },
+}
+
+// Next.js 16: themeColor는 viewport export로 분리
+export const viewport: Viewport = {
+  themeColor: "#18181b",
 }
 
 export default function RootLayout({
@@ -47,6 +66,8 @@ export default function RootLayout({
         >
           {/* QueryProvider: TanStack Query 캐시를 ThemeProvider 안에 배치해 테마 컨텍스트 접근 가능 */}
           <QueryProvider>
+            {/* PWA Service Worker 등록 — 렌더링 없는 순수 effect 컴포넌트 */}
+            <ServiceWorkerRegistrar />
             <Header />
             {children}
             {/* richColors: 알림 유형별 색상 자동 적용 */}
