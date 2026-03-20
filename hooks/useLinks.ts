@@ -89,6 +89,40 @@ export function useUpdateLink() {
 }
 
 /**
+ * 링크 순서 일괄 업데이트 mutation 훅
+ * PATCH /api/links/reorder 호출 — 드래그 완료 후 변경된 항목들의 order를 Notion DB에 반영
+ * 성공 시 ISR 캐시 무효화 + 페이지 새로고침 (토스트 없음 — 낙관적 업데이트로 즉시 반영됨)
+ */
+export function useReorderLinks() {
+  const router = useRouter()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (items: Array<{ id: string; order: number }>) => {
+      const res = await fetch("/api/links/reorder", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(items),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error ?? "순서 저장에 실패했습니다")
+      }
+      return res.json()
+    },
+    onSuccess: () => {
+      // 백그라운드에서 캐시 갱신 — UI는 낙관적 업데이트로 이미 반영된 상태
+      revalidate()
+      router.refresh()
+      queryClient.invalidateQueries({ queryKey: ["links"] })
+    },
+    onError: (error: Error) => {
+      toast.error(error.message ?? "순서 저장에 실패했습니다")
+    },
+  })
+}
+
+/**
  * 링크 삭제 mutation 훅
  * DELETE /api/links/[id] 호출 후 ISR 캐시 무효화 + 페이지 새로고침 + 토스트 알림
  */

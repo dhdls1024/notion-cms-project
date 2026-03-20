@@ -17,7 +17,10 @@ export const createLinkSchema = z.object({
  * createLinkSchema에 active 필드 추가 후 모든 필드를 optional로 변환 (부분 업데이트)
  */
 export const updateLinkSchema = createLinkSchema
-  .extend({ active: z.boolean().optional() })
+  .extend({
+    active: z.boolean().optional(),
+    order: z.number().optional(), // 드래그 정렬 순서
+  })
   .partial()
 
 // output 타입 (default 적용 후) — API 호출 시 사용

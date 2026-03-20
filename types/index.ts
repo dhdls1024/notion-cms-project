@@ -33,6 +33,7 @@ export interface LinkItem {
   category: string // Category 속성
   active: boolean // CheckBox 속성
   memo: string // Memo 속성 (메모/설명)
+  order: number // Order 속성 (정렬 순서)
 }
 
 // 링크 생성 입력 타입 — id, active는 서버에서 자동 결정 (active 기본값 true)
@@ -50,4 +51,5 @@ export interface UpdateLinkInput {
   category?: string
   active?: boolean
   memo?: string
+  order?: number // 드래그 정렬 순서 업데이트
 }

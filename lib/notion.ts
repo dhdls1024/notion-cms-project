@@ -92,9 +92,13 @@ function normalizePageToLinkItem(page: Record<string, unknown>): LinkItem | null
   const memoProp = props["Memo"] as { type: string; rich_text: Array<{ plain_text: string }> } | undefined
   const memo = memoProp?.type === "rich_text" ? (memoProp.rich_text[0]?.plain_text ?? "") : ""
 
+  // Order 속성 파싱 (type: "number") — 드래그 정렬 순서, 미설정 시 0 폴백
+  const orderProp = props["Order"] as { type: string; number: number | null } | undefined
+  const order = orderProp?.type === "number" && orderProp.number != null ? orderProp.number : 0
+
   const pageId = typeof page.id === "string" ? page.id : ""
 
-  return { id: pageId, title, url, category, active, memo } satisfies LinkItem
+  return { id: pageId, title, url, category, active, memo, order } satisfies LinkItem
 }
 
 /**
@@ -138,6 +142,7 @@ export async function fetchAllLinks(): Promise<LinkItem[]> {
   return response.results
     .map((page) => normalizePageToLinkItem(page as Record<string, unknown>))
     .filter((item): item is LinkItem => item !== null)
+    .sort((a, b) => a.order - b.order) // Order 오름차순 정렬
 }
 
 /**
@@ -199,6 +204,10 @@ export async function updateLink(id: string, input: UpdateLinkInput): Promise<Li
   }
   if (input.memo !== undefined) {
     properties["Memo"] = { rich_text: [{ text: { content: input.memo } }] }
+  }
+  if (input.order !== undefined) {
+    // Order는 Number 타입 — 드래그 정렬 순서 업데이트
+    properties["Order"] = { number: input.order }
   }
 
   // notion.pages.update로 지정된 페이지 ID의 속성 업데이트
